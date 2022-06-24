@@ -1,14 +1,14 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import axios from "axios";
 
 import "./formulario.css"
-import { FormErrors } from "./formErrors";
+import { FormErrors } from "./formErrors"
 
 type props = {
     tema: string
 }
 
-export default class FormularioCadastroCliente extends Component<props> {
+export default class EditarCliente extends Component<props> {
     state = {
         nome: '',
         sobrenome: '',
@@ -22,6 +22,7 @@ export default class FormularioCadastroCliente extends Component<props> {
         numero: '',
         codigoPostal: '',
         informacoesAdicionais: '',
+        id: '',
 
         // VERIFICADOR
         nomeValid: false,
@@ -37,7 +38,7 @@ export default class FormularioCadastroCliente extends Component<props> {
         codigoPostalValid: false,
         informacoesAdicionaisValid: false,
         formValid: false,
-        formErrors: {nome: '', sobrenome: '', email: '', ddd: '', telefone: '', estado: '', cidade: '', bairro: '', rua: '', numero: '', codigoPostal: '', informacoesAdicionais: ''}
+        formErrors: { nome: '', sobrenome: '', email: '', ddd: '', telefone: '', estado: '', cidade: '', bairro: '', rua: '', numero: '', codigoPostal: '', informacoesAdicionais: '' }
     }
 
     validateField(fieldName: any, value: any) {
@@ -54,8 +55,8 @@ export default class FormularioCadastroCliente extends Component<props> {
         let numeroValid = this.state.numeroValid;
         let codigoPostalValid = this.state.codigoPostalValid;
         let informacoesAdicionaisValid = this.state.informacoesAdicionaisValid;
-      
-        switch(fieldName) {
+
+        switch (fieldName) {
             case 'nome':
                 nomeValid = value.length > 0;
                 fieldValidationErrors.nome = nomeValid ? '' : ' inválido';
@@ -66,66 +67,83 @@ export default class FormularioCadastroCliente extends Component<props> {
                 break;
             case 'email':
                 emailValid = value.match(/\S+@\S+\.\S+/i);
-                fieldValidationErrors.email = emailValid ? '': ' inválido';
+                fieldValidationErrors.email = emailValid ? '' : ' inválido';
                 break;
             case 'ddd':
                 dddValid = value.match(/^(^[0-9,]*$)$/i);;
-                fieldValidationErrors.ddd = dddValid ? '': ' inválido';
-            break;
+                fieldValidationErrors.ddd = dddValid ? '' : ' inválido';
+                break;
             case 'telefone':
                 telefoneValid = value.match(/^(^[0-9,]*$)$/i);;
-                fieldValidationErrors.telefone = telefoneValid ? '': ' inválido';
-            break;
+                fieldValidationErrors.telefone = telefoneValid ? '' : ' inválido';
+                break;
             case 'estado':
                 estadoValid = value.length > 0;
-                fieldValidationErrors.estado = estadoValid ? '': ' inválido';
-            break;
+                fieldValidationErrors.estado = estadoValid ? '' : ' inválido';
+                break;
             case 'cidade':
                 cidadeValid = value.length > 0;
-                fieldValidationErrors.cidade= cidadeValid ? '': ' inválida';
-            break;
+                fieldValidationErrors.cidade = cidadeValid ? '' : ' inválida';
+                break;
             case 'bairro':
                 bairroValid = value.length > 0;
-                fieldValidationErrors.bairro = bairroValid ? '': ' inválido';
-            break;
+                fieldValidationErrors.bairro = bairroValid ? '' : ' inválido';
+                break;
             case 'rua':
                 ruaValid = value.length > 0;
-                fieldValidationErrors.rua = ruaValid ? '': ' inválida';
-            break;
+                fieldValidationErrors.rua = ruaValid ? '' : ' inválida';
+                break;
             case 'numero':
                 numeroValid = value.match(/^(^[0-9,]*$)$/i);;
-                fieldValidationErrors.numero = numeroValid ? '': ' inválido';
-            break;
+                fieldValidationErrors.numero = numeroValid ? '' : ' inválido';
+                break;
             case 'codigoPostal':
                 codigoPostalValid = value.match(/^(^[0-9,]*$)$/i);;
-                fieldValidationErrors.codigoPostal = codigoPostalValid ? '': ' inválido';
-            break;
+                fieldValidationErrors.codigoPostal = codigoPostalValid ? '' : ' inválido';
+                break;
             case 'informacoesAdicionais':
                 informacoesAdicionaisValid = value.length > 0;
-                fieldValidationErrors.informacoesAdicionais = informacoesAdicionaisValid ? '': ' inválida';
-            break;
+                fieldValidationErrors.informacoesAdicionais = informacoesAdicionaisValid ? '' : ' inválida';
+                break;
             default:
                 break;
         }
 
-        this.setState({formErrors: fieldValidationErrors,
-                        nomeValid: nomeValid,
-                        sobrenomeValid: sobrenomeValid,
-                        emailValid: emailValid,
-                        dddValid: dddValid,
-                        telefoneValid: telefoneValid,
-                        estadoValid: estadoValid,
-                        cidadeValid: cidadeValid,
-                        bairroValid: bairroValid,
-                        ruaValid: ruaValid,
-                        numeroValid: numeroValid,
-                        codigoPostalValid: codigoPostalValid,
-                        informacoesAdicionaisValid: informacoesAdicionaisValid
-                      }, this.validateForm);
-      }
-      
+        this.setState({
+            formErrors: fieldValidationErrors,
+            nomeValid: nomeValid,
+            sobrenomeValid: sobrenomeValid,
+            emailValid: emailValid,
+            dddValid: dddValid,
+            telefoneValid: telefoneValid,
+            estadoValid: estadoValid,
+            cidadeValid: cidadeValid,
+            bairroValid: bairroValid,
+            ruaValid: ruaValid,
+            numeroValid: numeroValid,
+            codigoPostalValid: codigoPostalValid,
+            informacoesAdicionaisValid: informacoesAdicionaisValid
+        }, this.validateForm);
+    }
+
     validateForm() {
-        this.setState({formValid: this.state.nomeValid && this.state.sobrenomeValid && this.state.emailValid && this.state.dddValid && this.state.telefoneValid && this.state.estadoValid && this.state.cidadeValid && this.state.bairroValid && this.state.ruaValid && this.state.numeroValid && this.state.codigoPostalValid && this.state.informacoesAdicionaisValid}); 
+        this.setState({ formValid: this.state.nomeValid && this.state.sobrenomeValid && this.state.emailValid && this.state.dddValid && this.state.telefoneValid && this.state.estadoValid && this.state.cidadeValid && this.state.bairroValid && this.state.ruaValid && this.state.numeroValid && this.state.codigoPostalValid && this.state.informacoesAdicionaisValid });
+    }
+
+    componentDidMount () {
+        let url = window.location.href.split("/") 
+        console.log(url);
+             
+        if (url[3] === "atualizarCliente") { 
+            this.state.id = url[4]
+        }
+
+        axios.get(`http://localhost:32832/cliente/${this.state.id}}`).then((res) => {
+            const info = res.data;
+            console.log(res.data);
+        })      
+        
+        //this.state.nome = this.state.info.nome;
     }
 
     handleChange = (event: any) => {
@@ -137,12 +155,12 @@ export default class FormularioCadastroCliente extends Component<props> {
 
         const name = event.target.name;
         const value = event.target.value;
-        this.setState({[name]: value}, 
+        this.setState({ [name]: value },
             () => { this.validateField(name, value) });
     }
 
     handleSubmit = () => {
-       const info = {
+        const info = {
             nome: this.state.nome,
             sobreNome: this.state.sobrenome,
             email: this.state.email,
@@ -159,25 +177,7 @@ export default class FormularioCadastroCliente extends Component<props> {
                 ddd: this.state.ddd,
                 numero: this.state.numero
             }]
-       }
-        
-       
-        axios.post("http://localhost:32832/cliente/cadastrar", info)
-
-        this.setState({ 
-            nome: '',
-            sobreNome: '',
-            email: '',
-            ddd: '',
-            telefone: '',
-            cidade: '',
-            bairro: '',
-            rua: '',
-            numero: '',
-            codigoPostal: '',
-            estado: '',
-            informacoesAdicionais: ''
-        })
+        }
     }
 
     render() {
@@ -242,7 +242,7 @@ export default class FormularioCadastroCliente extends Component<props> {
                             </div>
                         </div>
                     </form>
-                    
+
                     <FormErrors formErrors={this.state.formErrors} />
 
                 </div>

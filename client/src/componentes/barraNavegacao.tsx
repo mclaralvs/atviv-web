@@ -33,7 +33,7 @@ export default class BarraNavegacao extends Component<props> {
             return <></>
         } else {
             let lista = this.props.botoes.map(botao =>
-                <li><a href={botao.rota}>{botao.nome}</a></li>
+                <li key={botao.nome}><a  href={botao.rota}>{botao.nome}</a></li>
             )
             return lista
         }

@@ -1,17 +1,26 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Component } from "react";
-import 'materialize-css/dist/css/materialize.min.css'
+import 'materialize-css/dist/css/materialize.min.css';
 
 import './cliente.css'
-
+import axios from "axios";
 
 type props = {
     tema: string
 }
 
 export default class ListaCliente extends Component<props> {
-    render() {
+    state = {
+        clientes: []
+    }
+    componentDidMount(){
+        axios.get('http://localhost:32832/clientes').catch( (res) => {
+            const clientes = res.response.data
+            this.setState({clientes})     
+        });
+    }
 
+    render() {
         return (
             <>
                 <div className='row'>
@@ -28,31 +37,21 @@ export default class ListaCliente extends Component<props> {
                                         <th>Atualizar</th>
                                         <th>Excluir</th>
                                     </tr>
+
+                        
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Matheus Sakuragui</td>
-                                        <td>matheus.sakuragui@gmail.com</td>
-                                        <td>12 12345-6789</td>
-                                        <td><i className="fa-solid fa-eye"></i></td>
-                                        <td><i className="fa-solid fa-pen"></i></td>
-                                        <td><i className="fa-solid fa-xmark"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mariana Ayumi</td>
-                                        <td>mariana.ayumi@gmail.com</td>
-                                        <td>12 23456-7890</td>
-                                        <td><i className="fa-solid fa-eye"></i></td>
-                                        <td><i className="fa-solid fa-pen"></i></td>
-                                        <td><i className="fa-solid fa-xmark"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Maria Clara Faria</td>
-                                        <td>maria.faria@gmail.com</td>
-                                        <td>12 34567-8901</td>
-                                        <td><i className="fa-solid fa-eye"></i></td>
-                                        <td><i className="fa-solid fa-pen"></i></td>
-                                        <td><i className="fa-solid fa-xmark"></i></td>
+                                        {this.state.clientes.map((cliente: any) =>
+                                        <div key={cliente.id}>
+                                            <td>{cliente.nome}</td>
+                                            <td>{cliente.email}</td>
+                                            
+                                            <td><i className="fa-solid fa-eye"></i></td>
+                                            <td><i className="fa-solid fa-pen"></i></td>
+                                            <td><i className="fa-solid fa-xmark"></i></td>
+                                        </div>
+                                        )}
                                     </tr>
                                 </tbody>
                             </table>
