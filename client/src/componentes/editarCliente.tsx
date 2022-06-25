@@ -11,7 +11,7 @@ type props = {
 export default class EditarCliente extends Component<props> {
     state = {
         nome: '',
-        sobrenome: '',
+        sobreNome: '',
         email: '',
         ddd: '',
         telefone: '',
@@ -22,127 +22,34 @@ export default class EditarCliente extends Component<props> {
         numero: '',
         codigoPostal: '',
         informacoesAdicionais: '',
-        id: '',
-
-        // VERIFICADOR
-        nomeValid: false,
-        sobrenomeValid: false,
-        emailValid: false,
-        dddValid: false,
-        telefoneValid: false,
-        estadoValid: false,
-        cidadeValid: false,
-        bairroValid: false,
-        ruaValid: false,
-        numeroValid: false,
-        codigoPostalValid: false,
-        informacoesAdicionaisValid: false,
-        formValid: false,
-        formErrors: { nome: '', sobrenome: '', email: '', ddd: '', telefone: '', estado: '', cidade: '', bairro: '', rua: '', numero: '', codigoPostal: '', informacoesAdicionais: '' }
+        id: ''
     }
 
-    validateField(fieldName: any, value: any) {
-        let fieldValidationErrors = this.state.formErrors;
-        let nomeValid = this.state.nomeValid;
-        let sobrenomeValid = this.state.sobrenomeValid;
-        let emailValid = this.state.emailValid;
-        let dddValid = this.state.dddValid;
-        let telefoneValid = this.state.telefoneValid;
-        let estadoValid = this.state.estadoValid;
-        let cidadeValid = this.state.cidadeValid;
-        let bairroValid = this.state.bairroValid;
-        let ruaValid = this.state.ruaValid;
-        let numeroValid = this.state.numeroValid;
-        let codigoPostalValid = this.state.codigoPostalValid;
-        let informacoesAdicionaisValid = this.state.informacoesAdicionaisValid;
+    componentDidMount() {
+        let url = window.location.href.split("/")
+        console.log(url)
 
-        switch (fieldName) {
-            case 'nome':
-                nomeValid = value.length > 0;
-                fieldValidationErrors.nome = nomeValid ? '' : ' inválido';
-                break;
-            case 'sobrenome':
-                sobrenomeValid = value.length > 0;
-                fieldValidationErrors.sobrenome = sobrenomeValid ? '' : ' inválido';
-                break;
-            case 'email':
-                emailValid = value.match(/\S+@\S+\.\S+/i);
-                fieldValidationErrors.email = emailValid ? '' : ' inválido';
-                break;
-            case 'ddd':
-                dddValid = value.match(/^(^[0-9,]*$)$/i);;
-                fieldValidationErrors.ddd = dddValid ? '' : ' inválido';
-                break;
-            case 'telefone':
-                telefoneValid = value.match(/^(^[0-9,]*$)$/i);;
-                fieldValidationErrors.telefone = telefoneValid ? '' : ' inválido';
-                break;
-            case 'estado':
-                estadoValid = value.length > 0;
-                fieldValidationErrors.estado = estadoValid ? '' : ' inválido';
-                break;
-            case 'cidade':
-                cidadeValid = value.length > 0;
-                fieldValidationErrors.cidade = cidadeValid ? '' : ' inválida';
-                break;
-            case 'bairro':
-                bairroValid = value.length > 0;
-                fieldValidationErrors.bairro = bairroValid ? '' : ' inválido';
-                break;
-            case 'rua':
-                ruaValid = value.length > 0;
-                fieldValidationErrors.rua = ruaValid ? '' : ' inválida';
-                break;
-            case 'numero':
-                numeroValid = value.match(/^(^[0-9,]*$)$/i);;
-                fieldValidationErrors.numero = numeroValid ? '' : ' inválido';
-                break;
-            case 'codigoPostal':
-                codigoPostalValid = value.match(/^(^[0-9,]*$)$/i);;
-                fieldValidationErrors.codigoPostal = codigoPostalValid ? '' : ' inválido';
-                break;
-            case 'informacoesAdicionais':
-                informacoesAdicionaisValid = value.length > 0;
-                fieldValidationErrors.informacoesAdicionais = informacoesAdicionaisValid ? '' : ' inválida';
-                break;
-            default:
-                break;
-        }
 
-        this.setState({
-            formErrors: fieldValidationErrors,
-            nomeValid: nomeValid,
-            sobrenomeValid: sobrenomeValid,
-            emailValid: emailValid,
-            dddValid: dddValid,
-            telefoneValid: telefoneValid,
-            estadoValid: estadoValid,
-            cidadeValid: cidadeValid,
-            bairroValid: bairroValid,
-            ruaValid: ruaValid,
-            numeroValid: numeroValid,
-            codigoPostalValid: codigoPostalValid,
-            informacoesAdicionaisValid: informacoesAdicionaisValid
-        }, this.validateForm);
-    }
+        axios.get(`http://localhost:32832/cliente/${url[4]}`).catch((res) => {
+            const info = res.response.data;
+            console.log(res.response.data);
 
-    validateForm() {
-        this.setState({ formValid: this.state.nomeValid && this.state.sobrenomeValid && this.state.emailValid && this.state.dddValid && this.state.telefoneValid && this.state.estadoValid && this.state.cidadeValid && this.state.bairroValid && this.state.ruaValid && this.state.numeroValid && this.state.codigoPostalValid && this.state.informacoesAdicionaisValid });
-    }
+            this.setState({
+                nome: res.response.data.nome,
+                sobreNome: res.response.data.sobreNome,
+                email: res.response.data.email,
+                ddd: res.response.data.telefones[0].ddd,
+                telefone: res.response.data.telefones[0].numero,
+                rua: res.response.data.endereco.rua,
+                estado: res.response.data.endereco.estado,
+                cidade: res.response.data.endereco.cidade,
+                bairro: res.response.data.endereco.bairro,
+                numero: res.response.data.endereco.numero,
+                codigoPostal: res.response.data.endereco.codigoPostal,
+                informacoesAdicionais: res.response.data.endereco.informacoesAdicionais
+            })
+        })
 
-    componentDidMount () {
-        let url = window.location.href.split("/") 
-        console.log(url);
-             
-        if (url[3] === "atualizarCliente") { 
-            this.state.id = url[4]
-        }
-
-        axios.get(`http://localhost:32832/cliente/${this.state.id}}`).then((res) => {
-            const info = res.data;
-            console.log(res.data);
-        })      
-        
         //this.state.nome = this.state.info.nome;
     }
 
@@ -155,14 +62,14 @@ export default class EditarCliente extends Component<props> {
 
         const name = event.target.name;
         const value = event.target.value;
-        this.setState({ [name]: value },
-            () => { this.validateField(name, value) });
     }
 
     handleSubmit = () => {
+        let url = window.location.href.split("/")
+        console.log(url)
         const info = {
             nome: this.state.nome,
-            sobreNome: this.state.sobrenome,
+            sobreNome: this.state.sobreNome,
             email: this.state.email,
             endereco: {
                 cidade: this.state.cidade,
@@ -178,6 +85,10 @@ export default class EditarCliente extends Component<props> {
                 numero: this.state.numero
             }]
         }
+        axios.delete(`http://localhost:32832/cliente/delete/${url[4]}`).catch((res) => {
+            // CORS precisa ser configurado no backend para deletar o usuário.
+        })
+        axios.post("http://localhost:32832/cliente/cadastrar", info)
     }
 
     render() {
@@ -192,7 +103,7 @@ export default class EditarCliente extends Component<props> {
                                 <label htmlFor="first_name">Nome</label>
                             </div>
                             <div className="input-field col s12">
-                                <input onChange={this.handleChange} id="sobrenome" name="sobrenome" type="text" className="validate" value={this.state.sobrenome} />
+                                <input onChange={this.handleChange} id="sobreNome" name="sobreNome" type="text" className="validate" value={this.state.sobreNome} />
                                 <label htmlFor="last_name">Sobrenome</label>
                             </div>
                             <div className="input-field col s12">
@@ -228,7 +139,7 @@ export default class EditarCliente extends Component<props> {
                                 <label htmlFor="">Número</label>
                             </div>
                             <div className="input-field col s12">
-                                <input onChange={this.handleChange} id="codigoPostal" name="codigoPostal" type="number" className="validate" value={this.state.codigoPostal} />
+                                <input onChange={this.handleChange} id="codigoPostal" name="codigoPostal" type="text" className="validate" value={this.state.codigoPostal} />
                                 <label htmlFor="">Código Postal</label>
                             </div>
                             <div className="input-field col s12">
@@ -236,15 +147,12 @@ export default class EditarCliente extends Component<props> {
                                 <label htmlFor="">Informações Adicionais</label>
                             </div>
                             <div className="col s12">
-                                <button onClick={this.handleSubmit} className={estiloBotao} type="submit" name="action" disabled={!this.state.formValid}>Cadastrar
+                                <button onClick={this.handleSubmit} className={estiloBotao}  name="action" >Cadastrar
                                     <i className="material-icons right">send</i>
                                 </button>
                             </div>
                         </div>
                     </form>
-
-                    <FormErrors formErrors={this.state.formErrors} />
-
                 </div>
             </div>
         )

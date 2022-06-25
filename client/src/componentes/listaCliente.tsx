@@ -13,11 +13,18 @@ export default class ListaCliente extends Component<props> {
     state = {
         clientes: []
     }
-    componentDidMount(){
-        axios.get('http://localhost:32832/clientes').catch( (res) => {
+    componentDidMount() {
+        axios.get('http://localhost:32832/clientes').catch((res) => {
             const clientes = res.response.data
-            this.setState({clientes})     
+            this.setState({ clientes })
         });
+    }
+
+    desligamento(id: any) {
+        axios.delete(`http://localhost:32832/cliente/delete/${id}`).catch((res)=>{
+            // CORS precisa ser configurado no backend para deletar o usuário.
+        })
+        return (null)
     }
 
     render() {
@@ -31,28 +38,22 @@ export default class ListaCliente extends Component<props> {
                                 <thead>
                                     <tr>
                                         <th>Nome</th>
-                                        <th>E-mail</th>
-                                        <th>Telefone</th>
                                         <th>Visualizar</th>
                                         <th>Atualizar</th>
                                         <th>Excluir</th>
                                     </tr>
 
-                        
+
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        {this.state.clientes.map((cliente: any) =>
-                                        <div key={cliente.id}>
+                                    {this.state.clientes.map((cliente: any) =>
+                                        <tr key={cliente.id}>
                                             <td>{cliente.nome}</td>
-                                            <td>{cliente.email}</td>
-                                            
-                                            <td><i className="fa-solid fa-eye"></i></td>
-                                            <td><i className="fa-solid fa-pen"></i></td>
-                                            <td><i className="fa-solid fa-xmark"></i></td>
-                                        </div>
-                                        )}
-                                    </tr>
+                                            <td><a href={`/perfilCliente/${cliente.id}`}><i className="fa-solid fa-eye"></i></a></td>
+                                            <td><a href={`/atualizarCliente/${cliente.id}`}><i className="fa-solid fa-pen"></i></a></td>
+                                            <td><button id="botaoDesligar" value={cliente.id} onClick={() => this.desligamento(cliente.id)}><i className="fa-solid fa-xmark"></i></button></td>
+                                        </tr>
+                                    )}
                                 </tbody>
                             </table>
                         </div>

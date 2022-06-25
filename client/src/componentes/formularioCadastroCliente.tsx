@@ -11,7 +11,7 @@ type props = {
 export default class FormularioCadastroCliente extends Component<props> {
     state = {
         nome: '',
-        sobrenome: '',
+        sobreNome: '',
         email: '',
         ddd: '',
         telefone: '',
@@ -37,7 +37,7 @@ export default class FormularioCadastroCliente extends Component<props> {
         codigoPostalValid: false,
         informacoesAdicionaisValid: false,
         formValid: false,
-        formErrors: {nome: '', sobrenome: '', email: '', ddd: '', telefone: '', estado: '', cidade: '', bairro: '', rua: '', numero: '', codigoPostal: '', informacoesAdicionais: ''}
+        formErrors: {nome: '', sobreNome: '', email: '', ddd: '', telefone: '', estado: '', cidade: '', bairro: '', rua: '', numero: '', codigoPostal: '', informacoesAdicionais: ''}
     }
 
     validateField(fieldName: any, value: any) {
@@ -62,7 +62,7 @@ export default class FormularioCadastroCliente extends Component<props> {
                 break;
             case 'sobrenome':
                 sobrenomeValid = value.length > 0;
-                fieldValidationErrors.sobrenome = sobrenomeValid ? '' : ' inválido';
+                fieldValidationErrors.sobreNome = sobrenomeValid ? '' : ' inválido';
                 break;
             case 'email':
                 emailValid = value.match(/\S+@\S+\.\S+/i);
@@ -144,7 +144,7 @@ export default class FormularioCadastroCliente extends Component<props> {
     handleSubmit = () => {
        const info = {
             nome: this.state.nome,
-            sobreNome: this.state.sobrenome,
+            sobreNome: this.state.sobreNome,
             email: this.state.email,
             endereco: {
                 cidade: this.state.cidade,
@@ -153,7 +153,7 @@ export default class FormularioCadastroCliente extends Component<props> {
                 numero: this.state.numero,
                 estado: this.state.estado,
                 codigoPostal: this.state.codigoPostal,
-                infoAdicional: this.state.informacoesAdicionais
+                informacoesAdicionais: this.state.informacoesAdicionais
             },
             telefones: [{
                 ddd: this.state.ddd,
@@ -192,7 +192,7 @@ export default class FormularioCadastroCliente extends Component<props> {
                                 <label htmlFor="first_name">Nome</label>
                             </div>
                             <div className="input-field col s12">
-                                <input onChange={this.handleChange} id="sobrenome" name="sobrenome" type="text" className="validate" value={this.state.sobrenome} />
+                                <input onChange={this.handleChange} id="sobreNome" name="sobreNome" type="text" className="validate" value={this.state.sobreNome} />
                                 <label htmlFor="last_name">Sobrenome</label>
                             </div>
                             <div className="input-field col s12">
