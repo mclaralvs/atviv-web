@@ -1,4 +1,4 @@
-.row{
+.caixa{
     margin: 30px;
 }
 
@@ -14,6 +14,9 @@ h5, h6{
     color: #351964;
     text-align: center;
     font-weight: 700;
+}
+p{
+    text-align: center;
 }
 
 th{

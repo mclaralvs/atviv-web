@@ -26,11 +26,12 @@ export default class Info extends Component<props> {
             <>
                 <div className="container">
                     <div className="row caixa">
-                        <h6 className="col s6">Nome:</h6>
-                        <p className="col s6">{this.props.cliente.nome}</p>
+                            <h6 className="col s6">Nome:</h6>
+                            <p className="col s6">{this.props.cliente.nome}</p>
 
-                        <h6 className="col s6">Sobrenome:</h6>
-                        <p className="col s6">{this.props.cliente.sobreNome}</p>
+                            <h6 className="col s6">Sobrenome:</h6>
+                            <p className="col s6">{this.props.cliente.sobreNome}</p>
+
 
                         <h6 className="col s6">E-mail:</h6>
                         <p className="col s6">{this.props.cliente.email}</p>

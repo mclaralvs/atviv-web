@@ -199,11 +199,11 @@ export default class FormularioCadastroCliente extends Component<props> {
                                 <input onChange={this.handleChange} id="email" name="email" type="text" className="validate" value={this.state.email} />
                                 <label htmlFor="last_name">E-mail</label>
                             </div>
-                            <div className="input-field col s12">
+                            <div className="input-field col s4">
                                 <input onChange={this.handleChange} id="ddd" name="ddd" type="number" className="validate" value={this.state.ddd} />
                                 <label htmlFor="telefone">DDD</label>
                             </div>
-                            <div className="input-field col s12">
+                            <div className="input-field col s8">
                                 <input onChange={this.handleChange} id="telefone" name="telefone" type="number" className="validate" value={this.state.telefone} />
                                 <label htmlFor="telefone">Telefone</label>
                             </div>
@@ -223,11 +223,11 @@ export default class FormularioCadastroCliente extends Component<props> {
                                 <input onChange={this.handleChange} id="rua" name="rua" type="text" className="validate" value={this.state.rua} />
                                 <label htmlFor="">Rua</label>
                             </div>
-                            <div className="input-field col s12">
+                            <div className="input-field col s6">
                                 <input onChange={this.handleChange} id="numero" name="numero" type="number" className="validate" value={this.state.numero} />
                                 <label htmlFor="">Número</label>
                             </div>
-                            <div className="input-field col s12">
+                            <div className="input-field col s6">
                                 <input onChange={this.handleChange} id="codigoPostal" name="codigoPostal" type="number" className="validate" value={this.state.codigoPostal} />
                                 <label htmlFor="">Código Postal</label>
                             </div>
